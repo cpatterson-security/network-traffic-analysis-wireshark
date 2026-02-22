@@ -1,14 +1,14 @@
 # Network Traffic Analysis Using Wireshark
 
 ## Objective
-The objective of this project was to capture and analyze live network traffic using Wireshark in order to observe how common network protocols operate during real-time communication. Packet captures were performed to identify ICMP, DNS, and HTTP traffic generated during typical network activity such as host discovery, domain name resolution, and web browsing.
+The objective of this project was to capture and analyze live network traffic using Wireshark in order to observe how common network protocols operate during real-time communication. Packet captures were performed to identify ICMP, DNS, and HTTP traffic generated through host discovery, domain name resolution, and web browsing activities.
 
 ---
 
 ## Lab Environment
 - Host Machine: Windows 11  
-- Analysis Tool: Wireshark  
-- Network Interface: eth0  
+- Guest Machine: Kali Linux  
+- Network Interface (Capture): eth0 (Kali Linux VM)
 - Target Resources:
   - 8.8.8.8 (Google DNS Server)
   - example.com
@@ -17,52 +17,76 @@ The objective of this project was to capture and analyze live network traffic us
 ---
 
 ## Tools Used
-- Wireshark  
-- Kali Linux Terminal  
-- Ping Utility  
-- nslookup  
+- Wireshark
+- Kali Linux Terminal
+- ping (ICMP traffic generation)
+- nslookup (DNS query generation)
+- Web browser (HTTP traffic generation) 
 
 ---
 
 ## Steps Performed
-1. Initiated a live packet capture using the active network interface.  
-2. Generated ICMP traffic by sending echo requests to an external host (8.8.8.8).  
-3. Generated DNS traffic by performing domain name lookups using nslookup.  
-4. Generated HTTP traffic by accessing a non-encrypted website (neverssl.com).  
-5. Applied protocol-specific display filters in Wireshark to isolate captured traffic.  
-6. Analyzed packet details including source and destination addresses, protocols, and packet contents.  
+
+1. Initiated a live packet capture on the active network interface (eth0) within the Kali Linux virtual machine.
+2. Generated ICMP traffic by sending echo requests to an external host (8.8.8.8) using the ping utility.
+3. Generated DNS traffic by performing domain name resolution using nslookup against example.com.
+4. Generated HTTP traffic by accessing a non-encrypted website (neverssl.com) through a web browser.
+5. Applied protocol-specific display filters (icmp, dns, http) within Wireshark to isolate captured network traffic.
+6. Inspected packet-level details including source and destination IP addresses, protocol headers, and communication behavior. 
 
 ---
 
 ## Key Findings
-- ICMP packets confirmed successful host-to-host network connectivity.  
-- DNS query and response packets revealed domain name resolution processes.  
-- HTTP packets demonstrated how unencrypted web traffic is transmitted across a network.  
-- Packet analysis showed protocol-specific header information including IP addressing and port usage.  
-- Filtering network traffic improved visibility into specific protocol communication patterns.  
+
+- ICMP echo request and reply packets confirmed successful host-to-host network connectivity and proper routing between source and destination systems.
+- DNS query and response packets demonstrated domain name resolution through communication with an external DNS server (8.8.8.8).
+- HTTP traffic analysis revealed that unencrypted web communications transmit readable request and response data across the network.
+- Packet inspection provided visibility into protocol-specific header fields including source and destination IP addresses and port numbers.
+- Application of protocol display filters (icmp, dns, http) enabled targeted analysis of specific network communication types within captured traffic. 
 
 ---
 
 ## Evidence
 
-### 01-icmp-filter.png
-![ICMP Traffic](evidence/01-icmp-filter.png)
+### ICMP Traffic Capture (Ping Test)
+
+The following capture shows ICMP echo request and reply packets generated using the `ping 8.8.8.8` command from the Kali Linux terminal.  
+The display filter `icmp` was applied in Wireshark to isolate host-to-host connectivity traffic.
+
+Reviewing the captured packets showed ICMP Echo Request packets being sent from the local system and Echo Reply packets being returned from the destination host. This behavior indicates successful communication between systems and demonstrates how ICMP is used to verify basic network connectivity.
+
+
+![ICMP Traffic Capture](evidence/01-icmp-filter.png)
 
 ---
 
-### 02-dns-capture.png
-![DNS Traffic](evidence/02-dns-capture.png)
+### DNS Query Capture (nslookup)
+
+The following capture displays DNS query and response traffic generated using the `nslookup example.com` command.  
+The display filter `dns` was applied in Wireshark to observe domain name resolution activity.
+
+Analysis of the packets showed DNS queries being sent to a DNS server and responses being returned with the corresponding IP address information. This demonstrates how DNS is used to translate human-readable domain names into IP addresses required for network communication.
+
+![DNS Query Capture](evidence/02-dns-capture.png)
 
 ---
 
-### 03-http-filter.png
-![HTTP Traffic](evidence/03-http-filter.png)
+### HTTP Traffic Capture (NeverSSL Web Request)
+
+The following capture shows unencrypted HTTP traffic generated by accessing `http://neverssl.com` in a web browser.  
+The display filter `http` was applied in Wireshark to observe plaintext web communication across the network.
+
+Examining the captured packets revealed HTTP request and response data being transmitted without encryption. This demonstrates how data can be viewed in plaintext when secure protocols such as HTTPS are not used.
+
+
+![HTTP Traffic Capture](evidence/03-http-filter.png)
 
 ---
 
 ## Skills Demonstrated
-- Network traffic capture and packet inspection  
-- Protocol analysis (ICMP, DNS, HTTP)  
-- Application of Wireshark display filters  
-- Interpretation of packet-level communication  
-- Identification of network behavior during live traffic capture  
+
+- Capturing live network traffic using Wireshark
+- Using basic Wireshark display filters (ICMP, DNS, HTTP)
+- Generating network traffic using ping and nslookup
+- Observing how common network protocols communicate
+- Recognizing differences between encrypted and unencrypted web traffic 
